@@ -10,4 +10,10 @@ import java.util.List;
 @Mapper
 public interface CarMapper {
     List<Car> toCars(List<CarEntity> cars);
+
+    List<CarEntity> toCarEntities(List<Car> cars);
+
+    Car toCar(CarEntity carEntity);
+
+    CarEntity toCarEntity (Car car);
 }
