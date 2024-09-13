@@ -2,12 +2,12 @@ package by.clevertec.testCar.repository;
 
 import by.clevertec.testCar.common.CarType;
 import by.clevertec.testCar.entity.CarEntity;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.UUID;
 
-
+@Repository
 public class CarRepository {
     private static List<CarEntity> cars = List.of(
             new CarEntity(UUID.randomUUID(), 2, 2, 2, CarType.CROSSOVER),

@@ -5,9 +5,11 @@ import by.clevertec.testCar.entity.CarEntity;
 import by.clevertec.testCar.mapper.CarMapper;
 import by.clevertec.testCar.repository.CarRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 @RequiredArgsConstructor
 public class CarService {
     private final CarRepository repository;
