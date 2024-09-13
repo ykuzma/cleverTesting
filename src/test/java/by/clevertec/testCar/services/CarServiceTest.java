@@ -25,12 +25,10 @@ class CarServiceTest {
     @InjectMocks
     CarService carService;
 
-/*    private CarRepository carRepository = mock(CarRepository.class);
-    private CarService carService = new CarService(carRepository);*/
     @Test
     void shouldGetCars() {
         //given
-        when(carRepository.getCars()).thenReturn(List.of(new CarEntity()));
+        when(carRepository.findAll()).thenReturn(List.of(new CarEntity()));
         //when
         List<Car> cars = carService.getCars();
 
@@ -38,4 +36,6 @@ class CarServiceTest {
         assertThat(cars).isEqualTo(List.of(new Car()));
 
     }
+
+
 }

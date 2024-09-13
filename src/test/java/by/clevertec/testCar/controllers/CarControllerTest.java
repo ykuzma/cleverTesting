@@ -23,11 +23,13 @@ class CarControllerTest {
     MockMvc mockMvc;
 
     @Test
-    void getCars() throws Exception {
+    void shouldGetCars() throws Exception {
         when(carService.getCars()).thenReturn(List.of(new Car(), new Car()));
 
         mockMvc.perform(get("/cars"))
                 .andExpect(status().isOk());
 
     }
+
+
 }
