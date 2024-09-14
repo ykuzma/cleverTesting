@@ -1,7 +1,7 @@
-package by.clevertec.testCar.mapper;
+package by.clevertec.car.mapper;
 
-import by.clevertec.testCar.domain.Car;
-import by.clevertec.testCar.entity.CarEntity;
+import by.clevertec.car.domain.Car;
+import by.clevertec.car.entity.CarEntity;
 import org.jeasy.random.EasyRandom;
 import org.junit.jupiter.api.RepeatedTest;
 

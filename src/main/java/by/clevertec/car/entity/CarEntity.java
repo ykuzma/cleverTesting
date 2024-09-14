@@ -1,6 +1,6 @@
-package by.clevertec.testCar.entity;
+package by.clevertec.car.entity;
 
-import by.clevertec.testCar.common.CarType;
+import by.clevertec.car.common.CarType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

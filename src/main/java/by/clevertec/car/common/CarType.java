@@ -1,4 +1,4 @@
-package by.clevertec.testCar.common;
+package by.clevertec.car.common;
 
 public enum CarType {
 

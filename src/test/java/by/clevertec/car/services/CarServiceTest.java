@@ -1,10 +1,10 @@
-package by.clevertec.testCar.services;
+package by.clevertec.car.services;
 
-import by.clevertec.testCar.domain.Car;
-import by.clevertec.testCar.entity.CarEntity;
-import by.clevertec.testCar.mapper.CarMapperImpl;
-import by.clevertec.testCar.repository.CarRepository;
-import by.clevertec.testCar.util.TestHelper;
+import by.clevertec.car.domain.Car;
+import by.clevertec.car.entity.CarEntity;
+import by.clevertec.car.mapper.CarMapperImpl;
+import by.clevertec.car.repository.CarRepository;
+import by.clevertec.car.util.TestHelper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -13,10 +13,12 @@ import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertThrows;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -57,6 +59,16 @@ class CarServiceTest {
         assertThat(actualCar).isEqualTo(carExpected);
     }
 
+    @Test
+    void whenIdNotFound_shouldThrowException() {
+        //given
+        UUID id = UUID.nameUUIDFromBytes("0".getBytes());
+        when(carRepository.findById(id)).thenReturn(Optional.empty());
+
+        //when, then
+        assertThrows(NoSuchElementException.class, () -> carService.getCarById(id));
+    }
+
 
     @Test
     void shouldCreateCar() {
@@ -65,7 +77,12 @@ class CarServiceTest {
 
     @Test
     void shouldUpdateCar() {
+        //given
+        UUID id = UUID.nameUUIDFromBytes("2".getBytes());
 
+        //when
+
+        //then
     }
 
     @Test

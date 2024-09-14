@@ -1,6 +1,6 @@
-package by.clevertec.testCar.repository;
+package by.clevertec.car.repository;
 
-import by.clevertec.testCar.entity.CarEntity;
+import by.clevertec.car.entity.CarEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 

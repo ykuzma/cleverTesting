@@ -1,6 +1,6 @@
-package by.clevertec.testCar.domain;
+package by.clevertec.car.domain;
 
-import by.clevertec.testCar.common.CarType;
+import by.clevertec.car.common.CarType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

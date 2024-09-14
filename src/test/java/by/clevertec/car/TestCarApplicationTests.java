@@ -1,4 +1,4 @@
-package by.clevertec.testCar;
+package by.clevertec.car;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,4 +1,4 @@
-package by.clevertec.testCar;
+package by.clevertec.car;
 
 import org.springframework.boot.SpringApplication;
 

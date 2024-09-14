@@ -1,7 +1,7 @@
-package by.clevertec.testCar.controllers;
+package by.clevertec.car.controllers;
 
-import by.clevertec.testCar.domain.Car;
-import by.clevertec.testCar.services.CarService;
+import by.clevertec.car.domain.Car;
+import by.clevertec.car.services.CarService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;

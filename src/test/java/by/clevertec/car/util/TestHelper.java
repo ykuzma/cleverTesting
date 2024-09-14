@@ -1,8 +1,8 @@
-package by.clevertec.testCar.util;
+package by.clevertec.car.util;
 
-import by.clevertec.testCar.common.CarType;
-import by.clevertec.testCar.domain.Car;
-import by.clevertec.testCar.entity.CarEntity;
+import by.clevertec.car.common.CarType;
+import by.clevertec.car.domain.Car;
+import by.clevertec.car.entity.CarEntity;
 import org.jeasy.random.EasyRandom;
 
 import java.util.ArrayList;
