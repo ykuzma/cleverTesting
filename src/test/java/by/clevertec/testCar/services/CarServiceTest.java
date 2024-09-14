@@ -4,6 +4,7 @@ import by.clevertec.testCar.domain.Car;
 import by.clevertec.testCar.entity.CarEntity;
 import by.clevertec.testCar.mapper.CarMapperImpl;
 import by.clevertec.testCar.repository.CarRepository;
+import by.clevertec.testCar.util.TestHelper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -12,6 +13,8 @@ import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
@@ -19,6 +22,8 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class CarServiceTest {
+
+    TestHelper testHelper = new TestHelper();
     @Mock
     CarRepository carRepository;
     @Spy
@@ -29,21 +34,48 @@ class CarServiceTest {
     @Test
     void shouldGetCars() {
         //given
-        when(carRepository.findAll()).thenReturn(List.of(new CarEntity()));
+        List<CarEntity> entities = testHelper.getAllCarEntities();
+        List<Car> expectedCars = testHelper.getAllCars();
+        when(carRepository.findAll()).thenReturn(entities);
         //when
-        List<Car> cars = carService.getCars();
+        List<Car> actualCars = carService.getCars();
 
         //then
-        assertThat(cars).isEqualTo(List.of(new Car()));
+        assertThat(actualCars).isEqualTo(expectedCars);
+    }
+
+    @Test
+    void shouldGetCarById() {
+        //given
+        UUID id = UUID.nameUUIDFromBytes("1".getBytes());
+        CarEntity carEntity = testHelper.getCarEntityById(id);
+        Car carExpected = testHelper.getCarById(id);
+        when(carRepository.findById(id)).thenReturn(Optional.of(carEntity));
+        //when
+        Car actualCar = carService.getCarById(id);
+        //then
+        assertThat(actualCar).isEqualTo(carExpected);
+    }
+
+
+    @Test
+    void shouldCreateCar() {
 
     }
 
     @Test
-    void shouldDeleteCars(){
-        Car car = new Car();
-        carService.delete(car);
+    void shouldUpdateCar() {
 
-        verify(carRepository).delete(new CarEntity());
+    }
+
+    @Test
+    void shouldDeleteCars() {
+        //given
+        UUID id = UUID.randomUUID();
+        //when
+        carService.delete(id);
+        //then
+        verify(carRepository).deleteById(id);
     }
 
 }

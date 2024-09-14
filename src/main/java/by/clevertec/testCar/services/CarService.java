@@ -32,13 +32,13 @@ public class CarService {
         return mapper.toCar(save);
     }
 
-    public Car update(Car car) {
+    public Car update(Car car, UUID id) {
         CarEntity save = repository.save(mapper.toCarEntity(car));
         return mapper.toCar(save);
     }
 
-    public void delete(Car car) {
-        repository.delete(mapper.toCarEntity(car));
+    public void delete(UUID id) {
+        repository.deleteById(id);
     }
 
 }

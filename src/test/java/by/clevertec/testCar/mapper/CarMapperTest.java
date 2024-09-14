@@ -1,13 +1,9 @@
 package by.clevertec.testCar.mapper;
 
-import by.clevertec.testCar.common.CarType;
 import by.clevertec.testCar.domain.Car;
 import by.clevertec.testCar.entity.CarEntity;
 import org.jeasy.random.EasyRandom;
 import org.junit.jupiter.api.RepeatedTest;
-import org.junit.jupiter.api.Test;
-
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -15,22 +11,9 @@ class CarMapperTest {
 
     CarMapper carMapper = new CarMapperImpl();
 
-    @Test
-    void shouldMappingCarEntitiesToCars() {
-       //given
-
-       //when
-
-       //then
-    }
-
-    @Test
-    void toCarEntities() {
-
-    }
 
     @RepeatedTest(10)
-    void toCar() {
+    void shouldMappingEntityToCar() {
         //given
         EasyRandom easyRandom = new EasyRandom();
         CarEntity carEntity = easyRandom.nextObject(CarEntity.class);
@@ -48,10 +31,9 @@ class CarMapperTest {
     }
 
 
-
     @RepeatedTest(10)
-    void toCarEntity() {
-//given
+    void shouldMappingCarToEntity() {
+        //given
         EasyRandom easyRandom = new EasyRandom();
         Car car = easyRandom.nextObject(Car.class);
 
