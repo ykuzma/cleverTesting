@@ -38,28 +38,30 @@ public class CarController {
     }
 
     @GetMapping()
-    public List<Car> getCars(@RequestParam(required = false) CarType carType) {
+    public ResponseEntity<List<Car>> getCars(@RequestParam(required = false) CarType carType) {
         CriteriaCar criteriaCar = new CriteriaCar(carType);
-        return carService.getCars(criteriaCar);
+        return ResponseEntity.ok(carService.getCars(criteriaCar));
     }
 
     @GetMapping("/{id}")
-    public Car getCarsById(@PathVariable UUID id) {
+    public ResponseEntity<Car> getCarsById(@PathVariable UUID id) {
 
-        return carService.getCarById(id);
+        return ResponseEntity.ok(carService.getCarById(id));
     }
 
     @PostMapping
-    public Car createCar(@RequestBody Car car) {
-        return carService.create(car);
+    public ResponseEntity<Car> createCar(@RequestBody Car car) {
+
+        return ResponseEntity.ok(carService.create(car));
     }
 
     @PostMapping("/{id}")
-    public Car updateCar(@PathVariable UUID id, @RequestBody Car car) {
-        return carService.update(car, id);
+    public ResponseEntity<Car> updateCar(@PathVariable UUID id, @RequestBody Car car) {
+        return ResponseEntity.ok(carService.update(car, id));
     }
     @DeleteMapping("/{id}")
-    public void deleteCarById(@PathVariable UUID id) {
+    public ResponseEntity<Void> deleteCarById(@PathVariable UUID id) {
         carService.delete(id);
+        return ResponseEntity.ok().build();
     }
 }

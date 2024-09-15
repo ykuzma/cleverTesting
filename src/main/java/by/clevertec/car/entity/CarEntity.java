@@ -3,6 +3,8 @@ package by.clevertec.car.entity;
 import by.clevertec.car.common.CarType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,6 +25,8 @@ public class CarEntity {
     private int doorCount;
     @Column
     private int trunkCapacity;
+
+    @Enumerated(EnumType.STRING)
     @Column
     private CarType carType;
 }
