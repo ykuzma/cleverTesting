@@ -3,11 +3,13 @@ package by.clevertec.car.mapper;
 import by.clevertec.car.domain.Car;
 import by.clevertec.car.entity.CarEntity;
 import by.clevertec.car.util.TestHelper;
-import org.jeasy.random.EasyRandom;
 import org.junit.jupiter.api.RepeatedTest;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -16,26 +18,25 @@ class CarMapperTest {
     TestHelper testHelper = new TestHelper();
     CarMapper carMapper = new CarMapperImpl();
 
-    @Test
-    void shouldMappingCarsToEntities(){
-        //given
-        List<Car> allCars = testHelper.getAllCars();
-        List<CarEntity> expectedEntities = testHelper.getAllCarEntities();
+    @ParameterizedTest
+    @MethodSource
+    void shouldMappingCarsToEntities(List<Car> cars, List<CarEntity> expectedEntities){
+
         //when
-        List<CarEntity> actualEntities = carMapper.toCarEntities(allCars);
+        List<CarEntity> actualEntities = carMapper.toCarEntities(cars);
         //then
         assertThat(actualEntities).isEqualTo(expectedEntities);
     }
 
-    @Test
-    void shouldMappingCarsToEntities_whenListEmpty(){
-        //given
-        List<Car> allCars = List.of();
-        //when
-        List<CarEntity> actualEntities = carMapper.toCarEntities(allCars);
-        //then
-        assertThat(actualEntities).isEmpty();
-    }
+    public static Stream<Arguments> shouldMappingCarsToEntities(){
+        TestHelper testHelper = new TestHelper();
+        return Stream.of(
+                Arguments.of(testHelper.getAllCars(), testHelper.getAllCarEntities()),
+                Arguments.of(testHelper.getAllCars().subList(0,1), testHelper.getAllCarEntities().subList(0,1)),
+                Arguments.of(List.of(), List.of()),
+                Arguments.of(null, null)
+        );
+   }
 
     @RepeatedTest(10)
     void shouldMappingEntityToCar() {
