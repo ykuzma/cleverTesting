@@ -13,6 +13,7 @@ public class TestHelper {
 
     private final List<Car> allCars = new ArrayList<>();
     private final List<CarEntity> allCarEntities = new ArrayList<>();
+    private final EasyRandom easyRandom = new EasyRandom();
 
     public TestHelper() {
 
@@ -50,10 +51,8 @@ public class TestHelper {
                 .findAny().orElse(null);
     }
 
-    private  EasyRandom easyRandom = new EasyRandom();
-
-    public List<CarEntity> getRandomCarEntities() {
-        return easyRandom.objects(CarEntity.class, 100).toList();
+    public Car getRandomCar() {
+        return easyRandom.nextObject(Car.class);
     }
 
 

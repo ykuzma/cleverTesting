@@ -52,12 +52,12 @@ class CarServiceTest {
         //given
         UUID id = UUID.nameUUIDFromBytes("1".getBytes());
         CarEntity carEntity = testHelper.getCarEntityById(id);
-        Car carExpected = testHelper.getCarById(id);
+        Car expectedCar = testHelper.getCarById(id);
         when(carRepository.findById(id)).thenReturn(Optional.of(carEntity));
         //when
         Car actualCar = carService.getCarById(id);
         //then
-        assertThat(actualCar).isEqualTo(carExpected);
+        assertThat(actualCar).isEqualTo(expectedCar);
     }
 
     @Test
@@ -74,29 +74,29 @@ class CarServiceTest {
     @Test
     void shouldCreateCar() {
         //given
-        Car carForCreate = testHelper.getAllCars().get(4);
+        Car expectedCar = testHelper.getAllCars().get(4);
         CarEntity entityForCreate = testHelper.getAllCarEntities().get(4);
         when(carRepository.save(entityForCreate)).thenReturn(entityForCreate);
         //when
-        Car carActual = carService.create(carForCreate);
+        Car carActual = carService.create(expectedCar);
         //then
-        assertThat(carActual).isEqualTo(carForCreate);
+        assertThat(carActual).isEqualTo(expectedCar);
     }
 
     @Test
     void shouldUpdateCar() {
         //given
-        UUID id = UUID.nameUUIDFromBytes("2".getBytes());
+        UUID id = UUID.randomUUID();
 
-        Car carUpdate = testHelper.getAllCars().get(2);
-        Car carExpected = testHelper.getAllCars().get(3);
+        Car updateCar = testHelper.getAllCars().get(2);
+        Car expectedCar = testHelper.getAllCars().get(3);
 
         when(carRepository.findById(id)).thenReturn(Optional.of(testHelper.getAllCarEntities().get(1)));
         when(carRepository.save(ArgumentMatchers.any())).thenReturn(testHelper.getAllCarEntities().get(3));
         //when
-        Car carActual = carService.update(carUpdate, id);
+        Car actualCar = carService.update(updateCar, id);
         //then
-        assertThat(carActual).isEqualTo(carExpected);
+        assertThat(actualCar).isEqualTo(expectedCar);
     }
 
     @Test
