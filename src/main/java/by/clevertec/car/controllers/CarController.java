@@ -1,5 +1,7 @@
 package by.clevertec.car.controllers;
 
+import by.clevertec.car.common.CarType;
+import by.clevertec.car.common.CriteriaCar;
 import by.clevertec.car.domain.Car;
 import by.clevertec.car.services.CarService;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -24,9 +27,9 @@ public class CarController {
     }
 
     @GetMapping()
-    public List<Car> getCars() {
-
-        return carService.getCars();
+    public List<Car> getCars(@RequestParam(required = false) CarType carType) {
+        CriteriaCar criteriaCar = new CriteriaCar(carType);
+        return carService.getCars(criteriaCar);
     }
 
     @GetMapping("/{id}")

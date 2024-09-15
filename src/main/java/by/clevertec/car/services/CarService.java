@@ -1,10 +1,12 @@
 package by.clevertec.car.services;
 
+import by.clevertec.car.common.CriteriaCar;
 import by.clevertec.car.domain.Car;
 import by.clevertec.car.entity.CarEntity;
 import by.clevertec.car.mapper.CarMapper;
 import by.clevertec.car.repository.CarRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,9 +18,18 @@ public class CarService {
     private final CarRepository repository;
     private final CarMapper mapper;
 
-    public List<Car> getCars() {
-        List<CarEntity> cars = repository.findAll();
+    public List<Car> getCars(CriteriaCar criteriaCar) {
+
+        Specification<CarEntity> spec = getCarEntitySpecification(criteriaCar);
+
+        List<CarEntity> cars = repository.findAll(spec);
         return mapper.toCars(cars);
+    }
+
+    private Specification<CarEntity> getCarEntitySpecification(CriteriaCar criteriaCar) {
+        return criteriaCar.getCarType() != null ? (root, query, builder) ->
+                builder.equal(root.get("carType"), criteriaCar.getCarType())
+                : (root, query, builder) -> null;
     }
 
     public Car getCarById(UUID uuid) {
