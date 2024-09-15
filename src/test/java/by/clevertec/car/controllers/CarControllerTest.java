@@ -9,8 +9,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
+import java.util.UUID;
 
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -28,6 +31,17 @@ class CarControllerTest {
 
         mockMvc.perform(get("/cars"))
                 .andExpect(status().isOk());
+
+    }
+
+    @Test
+    void shouldDeleteCarById() throws Exception {
+        //given
+        UUID id = UUID.randomUUID();
+        //when
+        mockMvc.perform(delete("/cars/" + id))
+                .andExpect(status().isOk());
+        //then
 
     }
 
