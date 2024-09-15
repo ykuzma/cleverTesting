@@ -1,16 +1,22 @@
 package by.clevertec.car.controllers;
 
+import by.clevertec.car.common.CarType;
 import by.clevertec.car.domain.Car;
 import by.clevertec.car.services.CarService;
 import by.clevertec.car.util.TestHelper;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.List;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -19,7 +25,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(CarController.class)
@@ -32,15 +37,25 @@ class CarControllerTest {
     @Autowired
     ObjectMapper objectMapper;
     TestHelper testHelper = new TestHelper();
-    @Test
-    void shouldGetCars() throws Exception {
+    TypeReference<List<Car>> typeReference = new TypeReference<>() {
+    };
+
+    @ParameterizedTest
+    @EnumSource
+    void shouldGetCarsByType(CarType carType) throws Exception {
         //given
-        int expectedValue = testHelper.getAllCars().size();
-        when(carService.getCars()).thenReturn(testHelper.getAllCars());
-        //when, then
-        mockMvc.perform(get("/cars"))
+
+        when(carService.getCars(Mockito.any())).thenReturn(
+                testHelper.getCarsByType(carType, testHelper.getAllCars()));
+        //when
+        String contentAsString = mockMvc.perform(get("/cars?type={carType}", carType))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(expectedValue));
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+        List<Car> actualCars = objectMapper.readValue(contentAsString, typeReference);
+        //then
+        assertThat(actualCars).isNotEmpty().allMatch(car -> car.getCarType().equals(carType));
     }
 
     @Test

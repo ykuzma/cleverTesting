@@ -1,5 +1,6 @@
 package by.clevertec.car.services;
 
+import by.clevertec.car.common.CriteriaCar;
 import by.clevertec.car.domain.Car;
 import by.clevertec.car.entity.CarEntity;
 import by.clevertec.car.mapper.CarMapperImpl;
@@ -35,13 +36,13 @@ class CarServiceTest {
     CarService carService;
 
     @Test
-    void shouldGetCars() {
+    void shouldGetCarsByType() {
         //given
         List<CarEntity> entities = testHelper.getAllCarEntities();
         List<Car> expectedCars = testHelper.getAllCars();
-        when(carRepository.findAll()).thenReturn(entities);
+        when(carRepository.findAll(testHelper.getMockSpecification())).thenReturn(entities);
         //when
-        List<Car> actualCars = carService.getCars();
+        List<Car> actualCars = carService.getCars(new CriteriaCar(null));
 
         //then
         assertThat(actualCars).isEqualTo(expectedCars);
