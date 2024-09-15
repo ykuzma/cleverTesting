@@ -4,7 +4,12 @@ import by.clevertec.car.common.CarType;
 import by.clevertec.car.common.CriteriaCar;
 import by.clevertec.car.domain.Car;
 import by.clevertec.car.services.CarService;
+import by.clevertec.car.util.CarErrorResponse;
+import by.clevertec.car.util.CarNotFountException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +26,12 @@ import java.util.UUID;
 public class CarController {
 
     private final CarService carService;
+
+    @ExceptionHandler
+    private ResponseEntity<CarErrorResponse> handleException(CarNotFountException exception) {
+        CarErrorResponse response = new CarErrorResponse("Car not found");
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
 
     public CarController(CarService carService) {
         this.carService = carService;

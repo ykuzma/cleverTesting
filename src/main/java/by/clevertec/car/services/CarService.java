@@ -5,6 +5,7 @@ import by.clevertec.car.domain.Car;
 import by.clevertec.car.entity.CarEntity;
 import by.clevertec.car.mapper.CarMapper;
 import by.clevertec.car.repository.CarRepository;
+import by.clevertec.car.util.CarNotFountException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -33,7 +34,7 @@ public class CarService {
     }
 
     public Car getCarById(UUID uuid) {
-        CarEntity carEntity = repository.findById(uuid).orElseThrow();
+        CarEntity carEntity = repository.findById(uuid).orElseThrow(CarNotFountException::new);
         return mapper.toCar(carEntity);
     }
 
@@ -46,7 +47,7 @@ public class CarService {
     public Car update(Car newCar, UUID id) {
         CarEntity updatedEntity = repository.findById(id)
                 .map(entity -> updateEntity(newCar, entity))
-                .orElseThrow();
+                .orElseThrow(CarNotFountException::new);
 
         return mapper.toCar(repository.save(updatedEntity));
     }

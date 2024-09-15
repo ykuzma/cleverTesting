@@ -3,6 +3,7 @@ package by.clevertec.car.controllers;
 import by.clevertec.car.common.CarType;
 import by.clevertec.car.domain.Car;
 import by.clevertec.car.services.CarService;
+import by.clevertec.car.util.CarNotFountException;
 import by.clevertec.car.util.TestHelper;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -88,6 +89,16 @@ class CarControllerTest {
         Car actualCar = objectMapper.readValue(contentAsString, Car.class);
         //then
         assertThat(actualCar).isEqualTo(expectedCar);
+    }
+
+    @Test
+    void shouldGetNotFount_whenIdNotExist() throws Exception {
+        //given
+        UUID id = UUID.randomUUID();
+        when(carService.getCarById(id)).thenThrow(new CarNotFountException());
+        //when, then
+        mockMvc.perform(get("/cars/{id}", id))
+                .andExpect(status().isNotFound());
     }
 
     @Test

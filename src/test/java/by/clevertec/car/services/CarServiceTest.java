@@ -5,6 +5,7 @@ import by.clevertec.car.domain.Car;
 import by.clevertec.car.entity.CarEntity;
 import by.clevertec.car.mapper.CarMapperImpl;
 import by.clevertec.car.repository.CarRepository;
+import by.clevertec.car.util.CarNotFountException;
 import by.clevertec.car.util.TestHelper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,9 +14,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -40,7 +41,7 @@ class CarServiceTest {
         //given
         List<CarEntity> entities = testHelper.getAllCarEntities();
         List<Car> expectedCars = testHelper.getAllCars();
-        when(carRepository.findAll(testHelper.getMockSpecification())).thenReturn(entities);
+        when(carRepository.findAll(ArgumentMatchers.any(Specification.class))).thenReturn(entities);
         //when
         List<Car> actualCars = carService.getCars(new CriteriaCar(null));
 
@@ -68,7 +69,7 @@ class CarServiceTest {
         when(carRepository.findById(id)).thenReturn(Optional.empty());
 
         //when, then
-        assertThrows(NoSuchElementException.class, () -> carService.getCarById(id));
+        assertThrows(CarNotFountException.class, () -> carService.getCarById(id));
     }
 
 

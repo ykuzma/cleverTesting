@@ -4,7 +4,6 @@ import by.clevertec.car.common.CarType;
 import by.clevertec.car.domain.Car;
 import by.clevertec.car.entity.CarEntity;
 import org.jeasy.random.EasyRandom;
-import org.springframework.data.jpa.domain.Specification;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,9 +62,6 @@ public class TestHelper {
 
     public CarEntity getRandomCarEntity() {
         return easyRandom.nextObject(CarEntity.class);
-    }
-    public Specification<CarEntity> getMockSpecification() {
-        return (a, b, c) -> null;
     }
 
 }
