@@ -55,5 +55,9 @@ public class TestHelper {
         return easyRandom.nextObject(Car.class);
     }
 
+    public CarEntity getRandomCarEntity() {
+        return easyRandom.nextObject(CarEntity.class);
+    }
+
 
 }
