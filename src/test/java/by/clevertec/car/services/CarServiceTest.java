@@ -7,6 +7,7 @@ import by.clevertec.car.repository.CarRepository;
 import by.clevertec.car.util.TestHelper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
@@ -80,9 +81,15 @@ class CarServiceTest {
         //given
         UUID id = UUID.nameUUIDFromBytes("2".getBytes());
 
-        //when
+        Car carUpdate = testHelper.getAllCars().get(2);
+        Car carExpected = testHelper.getAllCars().get(3);
 
+        when(carRepository.findById(id)).thenReturn(Optional.of(testHelper.getAllCarEntities().get(1)));
+        when(carRepository.save(ArgumentMatchers.any())).thenReturn(testHelper.getAllCarEntities().get(3));
+        //when
+        Car carActual = carService.update(carUpdate, id);
         //then
+        assertThat(carActual).isEqualTo(carExpected);
     }
 
     @Test

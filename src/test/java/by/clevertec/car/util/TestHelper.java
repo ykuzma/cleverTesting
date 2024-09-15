@@ -19,13 +19,13 @@ public class TestHelper {
         allCars.add(new Car(UUID.nameUUIDFromBytes("1".getBytes()), 10, 8, 9, CarType.CROSSOVER));
         allCars.add(new Car(UUID.nameUUIDFromBytes("2".getBytes()), 9, 2, 52, CarType.HATCHBACK));
         allCars.add(new Car(UUID.nameUUIDFromBytes("3".getBytes()), 1, 11, 2, CarType.PICKUP));
-        allCars.add(new Car(UUID.nameUUIDFromBytes("4".getBytes()), 10, 5, 523, CarType.SEDAN));
+        allCars.add(new Car(UUID.nameUUIDFromBytes("2".getBytes()), 1, 11, 2, CarType.PICKUP));
         allCars.add(new Car(UUID.nameUUIDFromBytes("5".getBytes()), 342, 3, 4543, CarType.CROSSOVER));
 
         allCarEntities.add(new CarEntity(UUID.nameUUIDFromBytes("1".getBytes()), 10, 8, 9, CarType.CROSSOVER));
         allCarEntities.add(new CarEntity(UUID.nameUUIDFromBytes("2".getBytes()), 9, 2, 52, CarType.HATCHBACK));
         allCarEntities.add(new CarEntity(UUID.nameUUIDFromBytes("3".getBytes()), 1, 11, 2, CarType.PICKUP));
-        allCarEntities.add(new CarEntity(UUID.nameUUIDFromBytes("4".getBytes()), 10, 5, 523, CarType.SEDAN));
+        allCarEntities.add(new CarEntity(UUID.nameUUIDFromBytes("2".getBytes()), 1, 11, 2, CarType.PICKUP));
         allCarEntities.add(new CarEntity(UUID.nameUUIDFromBytes("5".getBytes()), 342, 3, 4543, CarType.CROSSOVER));
 
     }
