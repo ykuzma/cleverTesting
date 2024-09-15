@@ -6,12 +6,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.UUID;
 
 @RestController
+@RequestMapping("/cars")
 public class CarController {
 
     private final CarService carService;
@@ -20,13 +22,19 @@ public class CarController {
         this.carService = carService;
     }
 
-    @GetMapping("/cars")
-    List<Car> getCars() {
+    @GetMapping()
+    public List<Car> getCars() {
 
         return carService.getCars();
     }
 
-    @DeleteMapping("/cars/{id}")
+    @GetMapping("/{id}")
+    public Car getCarsById(@PathVariable UUID id) {
+
+        return carService.getCarById(id);
+    }
+
+    @DeleteMapping("/{id}")
     void deleteCarById(@PathVariable UUID id) {
         carService.delete(id);
     }
