@@ -73,7 +73,14 @@ class CarServiceTest {
 
     @Test
     void shouldCreateCar() {
-
+        //given
+        Car carForCreate = testHelper.getAllCars().get(4);
+        CarEntity entityForCreate = testHelper.getAllCarEntities().get(4);
+        when(carRepository.save(entityForCreate)).thenReturn(entityForCreate);
+        //when
+        Car carActual = carService.create(carForCreate);
+        //then
+        assertThat(carActual).isEqualTo(carForCreate);
     }
 
     @Test
