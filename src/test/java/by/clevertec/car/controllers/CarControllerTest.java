@@ -18,6 +18,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -30,10 +31,7 @@ class CarControllerTest {
     MockMvc mockMvc;
     @Autowired
     ObjectMapper objectMapper;
-
     TestHelper testHelper = new TestHelper();
-
-
     @Test
     void shouldGetCars() throws Exception {
         //given
@@ -65,15 +63,34 @@ class CarControllerTest {
     @Test
     void shouldCreateCar() throws Exception {
         //given
-        Car createCar = testHelper.getAllCars().get(3);
+        Car createCar = testHelper.getRandomCar();
         when(carService.create(createCar)).thenReturn(createCar);
-        //when
+        //when, then
         mockMvc.perform(post("/cars")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .contentType(objectMapper.writeValueAsString(createCar)))
-                .andExpect(status().isOk());
+                        .content(objectMapper.writeValueAsString(createCar)))
+                .andExpect(status().isOk())
+                .andExpect(content().json(objectMapper.writeValueAsString(createCar)));
+   }
 
-        //then
+    @Test
+    void shouldUpdateCar() throws Exception {
+        //given
+        UUID id = UUID.randomUUID();
+        Car updateCar = testHelper.getAllCars().get(2);
+        Car expectedCar = testHelper.getAllCars().get(3);
+        when(carService.update(updateCar, id)).thenReturn(expectedCar);
+        //when
+        String contentAsString = mockMvc.perform(post("/cars/{id}", id)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(updateCar)))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+        Car actualCar = objectMapper.readValue(contentAsString, Car.class);
+          //then
+        assertThat(actualCar).isEqualTo(expectedCar);
     }
 
     @Test

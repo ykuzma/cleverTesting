@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,12 +36,12 @@ public class CarController {
     }
 
     @PostMapping
-    public Car createCar(Car car) {
+    public Car createCar(@RequestBody Car car) {
         return carService.create(car);
     }
 
     @PostMapping("/{id}")
-    public Car updateCar(@PathVariable UUID id, Car car) {
+    public Car updateCar(@PathVariable UUID id, @RequestBody Car car) {
         return carService.update(car, id);
     }
     @DeleteMapping("/{id}")
