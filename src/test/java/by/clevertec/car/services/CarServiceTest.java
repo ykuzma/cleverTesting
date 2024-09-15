@@ -36,7 +36,7 @@ class CarServiceTest {
     CarService carService;
 
     @Test
-    void shouldGetCarsByType() {
+    void shouldGetAllCars() {
         //given
         List<CarEntity> entities = testHelper.getAllCarEntities();
         List<Car> expectedCars = testHelper.getAllCars();

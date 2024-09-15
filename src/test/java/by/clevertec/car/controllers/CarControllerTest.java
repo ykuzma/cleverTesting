@@ -40,6 +40,21 @@ class CarControllerTest {
     TypeReference<List<Car>> typeReference = new TypeReference<>() {
     };
 
+    @Test
+    void shouldGetCarsWithoutCriteria() throws Exception {
+        //given
+        List<Car> expectedCars = testHelper.getAllCars();
+        when(carService.getCars(Mockito.any())).thenReturn(expectedCars);
+        //when
+        String contentAsString = mockMvc.perform(get("/cars"))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+        List<Car> actualCars = objectMapper.readValue(contentAsString, typeReference);
+        //then
+        assertThat(actualCars).isEqualTo(expectedCars);
+    }
     @ParameterizedTest
     @EnumSource
     void shouldGetCarsByType(CarType carType) throws Exception {
