@@ -8,17 +8,16 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 
-import java.util.List;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.util.AssertionErrors.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -61,6 +60,20 @@ class CarControllerTest {
         Car actualCar = objectMapper.readValue(contentAsString, Car.class);
         //then
         assertThat(actualCar).isEqualTo(expectedCar);
+    }
+
+    @Test
+    void shouldCreateCar() throws Exception {
+        //given
+        Car createCar = testHelper.getAllCars().get(3);
+        when(carService.create(createCar)).thenReturn(createCar);
+        //when
+        mockMvc.perform(post("/cars")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .contentType(objectMapper.writeValueAsString(createCar)))
+                .andExpect(status().isOk());
+
+        //then
     }
 
     @Test

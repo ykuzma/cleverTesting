@@ -2,10 +2,10 @@ package by.clevertec.car.controllers;
 
 import by.clevertec.car.domain.Car;
 import by.clevertec.car.services.CarService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,8 +34,17 @@ public class CarController {
         return carService.getCarById(id);
     }
 
+    @PostMapping
+    public Car createCar(Car car) {
+        return carService.create(car);
+    }
+
+    @PostMapping("/{id}")
+    public Car updateCar(@PathVariable UUID id, Car car) {
+        return carService.update(car, id);
+    }
     @DeleteMapping("/{id}")
-    void deleteCarById(@PathVariable UUID id) {
+    public void deleteCarById(@PathVariable UUID id) {
         carService.delete(id);
     }
 }
